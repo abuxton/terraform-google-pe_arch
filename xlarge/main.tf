@@ -39,6 +39,7 @@ resource "google_compute_instance" "master" {
   metadata = {
     "sshKeys" = "${var.user}:${file(var.ssh_key)}"
     "VmDnsSetting" = "ZonalPreferred"
+    "internalDNS" = "pe-master-${random_id.deployment.hex}-${count.index}.${element(var.zones, count.index)}.c.${var.project}.internal"
   }
 
   boot_disk {
@@ -79,6 +80,7 @@ resource "google_compute_instance" "psql" {
   metadata = {
     "sshKeys" = "${var.user}:${file(var.ssh_key)}"
     "VmDnsSetting" = "ZonalPreferred"
+    "internalDNS" = "pe-psql-${random_id.deployment.hex}-${count.index}.${element(var.zones, count.index)}.c.${var.project}.internal"
   }
 
   boot_disk {
@@ -119,6 +121,7 @@ resource "google_compute_instance" "compiler" {
   metadata = {
     "sshKeys" = "${var.user}:${file(var.ssh_key)}"
     "VmDnsSetting" = "ZonalPreferred"
+    "internalDNS" = "pe-compiler-${random_id.deployment.hex}-${count.index}.${element(var.zones, count.index)}.c.${var.project}.internal"
   }
 
   boot_disk {
